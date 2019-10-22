@@ -2,35 +2,35 @@ import React from 'react';
 
 export const page1 = [
   {
-    title: '轻松建站',
-    content: '丰富的组件系统、支持可视化编辑、自由拖拽排版、实时预览、在线访问',
+    title: 'Easy to set up',
+    content: 'Integrating dynamic effects, music, video and images, users can easily achieve Html5 card',
     src: 'http://qiniu-image.luban-h5.wxjcart.com/landing-page/home-feature/quick-make.svg',
   },
   {
-    title: '表单提交',
-    content: '支持表单组件，即时倾听用户反馈，可以在后台查看和下载用户数据',
+    title: 'Form Collection',
+    content: 'Collect and organize information.Get answers from users fast.',
     src: 'http://qiniu-image.luban-h5.wxjcart.com/landing-page/home-feature/submit-form.svg',
   },
   {
-    title: '导入 PSD',
-    content: '支持一键导入PSD，将设计师的创意转换为 H5，快速查看效果、反馈、上线',
+    title: 'PSD to HTML5',
+    content: 'Upload PSD, and parse it to HTML5, just seconds',
     src: 'http://qiniu-image.luban-h5.wxjcart.com/landing-page/home-feature/import-psd.svg',
   },
 ];
 
 export const page2 = [
   {
-    title: '邀请函',
+    title: 'Invitation',
     url: '/works/preview/1552',
     image: 'https://i.loli.net/2019/10/13/RjQkhE3OsrVv7uz.png',
   },
   {
-    title: '早安',
+    title: 'Good Morning',
     url: '/works/preview/1551',
     image: 'https://i.loli.net/2019/10/13/kyzhsWFbmZT1JrN.png',
   },
   {
-    title: '程序员节',
+    title: 'Day of the Programmer',
     url: '/works/preview/833',
     image: 'https://i.loli.net/2019/10/10/FtWXY3wDNJLT4GP.png',
   },
@@ -38,12 +38,12 @@ export const page2 = [
 
 export const page3 = [
   {
-    title: '个人版',
+    title: 'Personal',
     content: [
-      <p key="1">支持 H5 站点制作</p>,
-      <p key="2">支持模板管理</p>,
-      <p key="3">支持表单提交</p>,
-      <p key="3">支持数据统计</p>,
+      <p key="1">Create Mobile Page</p>,
+      <p key="2">Manage Templates</p>,
+      <p key="3">Form Collection</p>,
+      <p key="3">Data statistics</p>,
     ],
     // exp: '免费使用',
     svg: (<svg width="32px" height="32px" viewBox="0 0 32 32">
@@ -81,17 +81,13 @@ export const page3 = [
     </svg>),
   },
   {
-    title: '企业版',
+    title: 'Enterprise',
     content: [
-      <p key="1">支持 H5 站点制作</p>,
-      // <p key="2">支持模板管理，实现模板共享</p>,
-      // <p key="3">支持工作组管理，实现多人协作</p>,
-      // <p key="4">支持自定义发布审批流</p>,
-      // <p key="5">支持自定义域名</p>,
-      <p key="2">支持模板管理</p>,
-      <p key="3">支持表单提交</p>,
-      <p key="3">支持数据统计</p>,
-      <p key="3">支持PSD导入</p>,
+      <p key="1">Create Mobile Page</p>,
+      <p key="2">Manage Templates</p>,
+      <p key="3">Form Collection</p>,
+      <p key="3">Data statistics</p>,
+      <p key="3">PSD to HTML5</p>,
     ],
     svg: (
       <svg width="32px" height="32px" viewBox="0 0 32 32">
@@ -123,20 +119,16 @@ export const page3 = [
       </svg>),
   },
   {
-    title: '企业 VIP 版',
+    title: 'Enterprise VIP',
     content: [
-      // <p key="1">支持通过 OpenAPI 调用制作流程</p>,
-      // <p key="2">可以指定可用模板，企业内共享模板</p>,
-      // <p key="3">支持创建多个企业级账户</p>,
-      // <p key="4">支持自定义发布审批流</p>,
-      // <p key="5">支持自定义域名</p>],
-      <p key="2">支持模板管理</p>,
-      <p key="3">支持表单提交</p>,
-      <p key="3">支持数据统计</p>,
-      <p key="3">支持PSD导入</p>,
-      <p key="3">支持自定义脚本</p>,
-      <p key="6">支持成员管理</p>,
-      <p key="6">支持项目管理</p>,
+      <p key="1">Create Mobile Page</p>,
+      <p key="2">Manage Templates</p>,
+      <p key="3">Form Collection</p>,
+      <p key="3">Data statistics</p>,
+      <p key="3">PSD to HTML5</p>,
+      <p key="3">Custom Script</p>,
+      <p key="6">User Management</p>,
+      <p key="6">Project Management</p>,
     ],
     svg: (
       <svg width="32px" height="32px" viewBox="0 0 32 32">
@@ -255,10 +247,7 @@ export const page4 = [
 ];
 
 export const footer = [
-  // { text: '解决方案', src: '#' },
   { text: '中文文档', src: 'https://ly525.github.io/luban-h5' },
   { text: 'English Document', src: 'https://ly525.github.io/luban-h5' },
-  // { text: '模板开发文档', src: '#' },
-  { text: '联系我们', src: 'https://github.com/ly525/luban-h5#%E4%BA%A4%E6%B5%81%E7%BE%A4' },
-  // { text: '联系我们', src: 'mailto:zhao.wuz@antfin.com' },
+  { text: 'Gitter', src: 'https://gitter.im/luban-h5/community' },
 ];

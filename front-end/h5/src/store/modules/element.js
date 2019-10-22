@@ -52,16 +52,18 @@ export const mutations = {
         elements.push(element)
         break
       case 'copy':
-        elements.push(state.editingElement.clone())
+        elements.push(state.editingElement.clone({ zindex: len + 1 }))
         break
       case 'delete':
         {
           const index = elements.findIndex(e => e.uuid === editingElement.uuid)
           if (index !== -1) {
-            let newElements = elements.slice()
-            newElements.splice(index, 1)
-            state.editingPage.elements = newElements
+            // let newElements = elements.slice()
+            // newElements.splice(index, 1)
+            // state.editingPage.elements = newElements
+            state.editingPage.elements.splice(index, 1)
           }
+          state.editingElement = null
         }
         break
       case 'move2Top':

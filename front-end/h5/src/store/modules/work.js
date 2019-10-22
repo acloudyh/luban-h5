@@ -4,7 +4,11 @@ import Page from '../../components/core/models/page'
 import Work from '../../components/core/models/work'
 import { AxiosWrapper } from '../../utils/http.js'
 import router from '@/router.js'
-import { takeScreenshot } from '../../utils/helper.js'
+import { takeScreenshot } from '../../utils/canvas-helper.js'
+
+function setLoading (commit, loadingName, isLoading) {
+  commit('loading/update', { type: loadingName, payload: isLoading }, { root: true })
+}
 
 export const actions = {
   previewWork ({ commit }, payload = {}) {
@@ -46,8 +50,10 @@ export const actions = {
     }
     return new Promise((resolve, reject) => {
       if (isSaveCover) {
+        setLoading(commit, 'uploadWorkCover_loading', true)
         takeScreenshot().then(file => {
           dispatch('uploadCover', { file }).then(() => {
+            setLoading(commit, 'uploadWorkCover_loading', false)
             fn(resolve)
           }) // uploadCover
         }) // takeScreenshot
@@ -143,7 +149,7 @@ export const actions = {
     }
    */
   fetchFormsOfWork ({ commit, state, dispatch }, workId) {
-    // TODO 考虑 return Promise
+    // 可以 return Promise
     new AxiosWrapper({
       dispatch,
       commit,
