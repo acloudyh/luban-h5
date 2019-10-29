@@ -14,7 +14,10 @@ const defaultItems = [
 ]
 
 export default {
-  name: 'lbp-form-radio-group',
+  name: 'lbp-form-checkbox-group',
+  components: {
+    LbpFormRadio
+  },
   props: {
     aliasName: {
       type: String,
@@ -26,7 +29,7 @@ export default {
     },
     type: {
       type: String,
-      default: 'radio'
+      default: 'checkbox'
     }
   },
   data () {
@@ -75,7 +78,7 @@ export default {
           ],
           name: 'mode'
         },
-        defaultPropValue: 'radio'
+        defaultPropValue: 'checkbox'
       }
     },
     components: {
@@ -163,19 +166,18 @@ export default {
   render () {
     return (
       <div>
-        <h3>{this.aliasName}</h3>
+        <h3>{this.aliasName}{this.type}</h3>
         <input type="text" hidden value={this.value_} data-type="lbp-form-input" data-uuid={this.uuid} />
         {
           this.items.map(item => (
-            <LbpFormRadio
+            <lbp-form-radio
               vertical
               value={item.value}
-              checked={this.value === item.value}
+              checked={this.type === 'radio' ? this.value === item.value : this.value.includes(item.value)}
               aliasName={this.aliasName}
               type={this.type}
               onChange={this.onChange}
-            >{item.value}
-            </LbpFormRadio>
+            >{item.value}</lbp-form-radio>
           ))
         }
       </div>
