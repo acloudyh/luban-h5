@@ -1,4 +1,3 @@
-import ImageGallery from '@/components/core/support/image-gallery/gallery.js'
 import placeholderImg from './lbp-picture-placeholder.png' // issue #34
 export default {
   name: 'lbp-picture',
@@ -8,25 +7,18 @@ export default {
   props: {
     imgSrc: {
       type: String,
-      default: placeholderImg
-    }
-  },
-  data: () => ({
-    placeholderImg
-  }),
-  editorConfig: {
-    propsConfig: {
-      imgSrc: {
-        type: 'image-gallery',
+      default: placeholderImg,
+      editor: {
+        type: 'lbs-image-gallery',
         label: '图片url',
         prop: {
           type: 'textarea'
         },
         defaultPropValue: ''
       }
-    },
-    components: {
-      'image-gallery': ImageGallery
     }
-  }
+  },
+  data: () => ({
+    placeholderImg
+  })
 }

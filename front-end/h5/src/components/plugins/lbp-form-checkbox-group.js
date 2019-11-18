@@ -21,15 +21,38 @@ export default {
   props: {
     aliasName: {
       type: String,
-      default: `标题演示-${genUUID().slice(0, 6)}`
+      default: `标题演示-${genUUID().slice(0, 6)}`,
+      editor: {
+        type: 'a-input',
+        label: '填写标题',
+        require: true
+      }
     },
     items: {
       type: Array,
-      default: () => defaultItems
+      default: () => defaultItems,
+      editor: {
+        type: 'lbs-prop-text-enum-editor',
+        label: '选项列表',
+        require: true,
+        defaultPropValue: defaultItems
+      }
     },
     type: {
       type: String,
-      default: 'checkbox'
+      default: 'checkbox',
+      editor: {
+        type: 'a-radio-group',
+        label: '选择模式',
+        require: true,
+        prop: {
+          options: [
+            { label: '单选', value: 'radio' },
+            { label: '多选', value: 'checkbox' }
+          ],
+          name: 'mode'
+        }
+      }
     }
   },
   data () {
@@ -51,85 +74,6 @@ export default {
   watch: {
     type (type) {
       this.value = type === 'radio' ? '' : []
-    }
-  },
-  editorConfig: {
-    propsConfig: {
-      items: {
-        type: 'lbs-form-radio-items-editor',
-        label: '选项列表',
-        require: true,
-        defaultPropValue: defaultItems
-      },
-      aliasName: {
-        type: 'a-input',
-        label: '填写标题',
-        require: true,
-        defaultPropValue: `标题演示-${genUUID().slice(0, 6)}`
-      },
-      type: {
-        type: 'a-radio-group',
-        label: '选择模式',
-        require: true,
-        prop: {
-          options: [
-            { label: '单选', value: 'radio' },
-            { label: '多选', value: 'checkbox' }
-          ],
-          name: 'mode'
-        },
-        defaultPropValue: 'checkbox'
-      }
-    },
-    components: {
-      'lbs-form-radio-items-editor': {
-        render () {
-          return <div>
-            {
-              this.value_.map((item, index) => (
-                <div>
-                  <a-input value={item.value} onChange={e => { item.value = e.target.value }}></a-input>
-                  <a-button type="dashed" shape="circle" icon="plus" onClick={this.add} />
-                  <a-button type="dashed" shape="circle" icon="minus" onClick={(item, index) => this.minus(item, index)} />
-                </div>
-              ))
-            }
-          </div>
-        },
-        props: {
-          value: {
-            type: Array,
-            default: () => defaultItems
-          }
-        },
-        computed: {
-          value_: {
-            get () {
-              return this.value
-            },
-            set (val) {
-              this.$emit('input', val)
-            }
-          }
-        },
-        methods: {
-          add () {
-            console.log(this.value_.length)
-            this.$emit('change', [
-              ...this.value_,
-              {
-                value: `选项${this.value_.length + 1}`,
-                label: `选项${this.value_.length + 1}-label`
-              }
-            ])
-          },
-          minus (item, index) {
-            const items = this.value_.slice(0)
-            items.splice(index, 1)
-            this.$emit('change', items)
-          }
-        }
-      }
     }
   },
   mounted () {

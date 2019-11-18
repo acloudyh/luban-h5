@@ -1,39 +1,6 @@
 import { mapState, mapActions } from 'vuex'
 import Shape from '../../support/shape'
-import { contains } from '../../../../utils/dom-helper'
-
-const contextmenuOptions = [
-  {
-    i18nLabel: 'editor.centerPanel.contextMenu.copy',
-    label: '复制',
-    value: 'copy'
-  },
-  {
-    i18nLabel: 'editor.centerPanel.contextMenu.delete',
-    label: '删除',
-    value: 'delete'
-  },
-  {
-    i18nLabel: 'editor.centerPanel.contextMenu.moveToTop',
-    label: '置顶',
-    value: 'move2Top'
-  },
-  {
-    i18nLabel: 'editor.centerPanel.contextMenu.moveToBottom',
-    label: '置底',
-    value: 'move2Bottom'
-  },
-  {
-    i18nLabel: 'editor.centerPanel.contextMenu.moveUp',
-    label: '上移',
-    value: 'addZindex'
-  },
-  {
-    i18nLabel: 'editor.centerPanel.contextMenu.moveDown',
-    label: '下移',
-    value: 'minusZindex'
-  }
-]
+import ContextMenu from '../../support/contexmenu'
 
 export default {
   props: ['elements', 'handleClickElementProp', 'handleClickCanvasProp'],
@@ -125,16 +92,22 @@ export default {
       this.calcY(top)
     },
     bindContextMenu (e) {
-      e.preventDefault() // 不显示默认的右击菜单
-      if (
-        e.target.classList.contains('element-on-edit-canvas') ||
-        e.target.parentElement.classList.contains('element-on-edit-canvas')
-      ) {
-        const { x, y } = this.$el.getBoundingClientRect()
-        this.contextmenuPos = [e.clientX - x, e.clientY - y]
-      } else {
-        this.hideContextMenu()
-      }
+      // 优化右击菜单的显示，去除冗余的无效逻辑
+      const { x, y } = this.$el.getBoundingClientRect()
+      this.contextmenuPos = [e.clientX - x, e.clientY - y]
+      // console.log(e.target)
+      // console.log(e.target.classList)
+      // // e.preventDefault() // 不显示默认的右击菜单
+      // if (
+      //   e.target.classList.contains('element-on-edit-canvas') ||
+      //   e.target.parentElement.classList.contains('element-on-edit-canvas')
+      // ) {
+      //   const { x, y } = this.$el.getBoundingClientRect()
+      //   console.log(x, y)
+      //   this.contextmenuPos = [e.clientX - x, e.clientY - y]
+      // } else {
+      //   this.hideContextMenu()
+      // }
     },
     hideContextMenu () {
       this.contextmenuPos = []
@@ -155,13 +128,14 @@ export default {
       return (
         <div
           style={{ height: '100%', position: 'relative' }}
-          class="canvas-editor-wrapper"
           onClick={(e) => {
             this.hideContextMenu()
             this.handleClickCanvas(e)
           }}
           onContextmenu={e => {
-            this.bindContextMenu(e)
+            e.preventDefault()
+            e.stopPropagation()
+            // this.bindContextMenu(e)
           }}
         >
           {
@@ -179,7 +153,15 @@ export default {
                 // 添加 class 的原因：与 handleClickCanvasProp 配合,
                 // 当点击编辑画布上的其它区域（clickEvent.target.classList 不包含下面的 className）的时候，设置 editingElement=null
                 class: 'element-on-edit-canvas',
-                props: element.getProps(), // #6 #3
+                props: {
+                  ...element.getProps(), // #6 #3,
+                  editorMode: 'edit'
+                },
+                // nativeOn: {
+                //   contextmenu: e => {
+                //     this.bindContextMenu(e)
+                //   }
+                // },
                 on: {
                   // 高亮当前点击的元素
                   // click: () => this.setEditingElement(element)
@@ -213,6 +195,9 @@ export default {
                   handlePointMouseUpProp={() => {
                     this.recordElementRect()
                   }}
+                  nativeOnContextmenu={e => {
+                    this.bindContextMenu(e)
+                  }}
                 >
                   {h(element.name, data)}
                 </Shape>
@@ -230,43 +215,15 @@ export default {
             ))
           }
           {
-            this.contextmenuPos.length
-              ? <a-menu
-                ref="contextmenu"
-                onSelect={({ item, key, selectedKeys }) => {
-                  this.elementManager({ type: key })
-                }}
-                // refrence: https://github.com/vueComponent/ant-design-vue/blob/master/components/vc-trigger/Trigger.jsx#L205
-                onMouseleave={(e) => {
-                  const contextmenu = this.$refs.contextmenu
-                  if (
-                    e &&
-                    e.relatedTarget &&
-                    contextmenu &&
-                    contextmenu.$el &&
-                    contains(e.relatedTarget, contextmenu.$el)
-                  ) {
-                    return
-                  }
-                  this.hideContextMenu()
-                }}
-                style={{
-                  left: this.contextmenuPos[0] + 'px',
-                  top: this.contextmenuPos[1] + 'px',
-                  userSelect: 'none',
-                  position: 'absolute',
-                  zIndex: 999
-                }}
-              >
-                { contextmenuOptions.map(option => (
-                  <a-menu-item
-                    key={option.value}
-                    data-command={option.value}
-                  >{this.$t(option.i18nLabel)}</a-menu-item>
-                ))
-                }
-              </a-menu>
-              : null
+            this.contextmenuPos.length &&
+            <ContextMenu
+              position={this.contextmenuPos}
+              onSelect={({ item, key, selectedKeys }) => {
+                this.elementManager({ type: key })
+                this.hideContextMenu()
+              }}
+              onHideMenu={this.hideContextMenu}
+            />
           }
         </div>
       )

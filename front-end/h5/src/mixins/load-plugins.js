@@ -1,4 +1,5 @@
 import Vue from 'vue'
+// import LbpButton from '@luban-h5/lbc-button'
 import LbpButton from '../components/plugins/lbp-button'
 import LbpPicture from '../components/plugins/lbp-picture'
 import LbpVideo from '../components/plugins/lbp-video'
@@ -79,13 +80,6 @@ export const pluginsList = [
     visible: true,
     name: LbpVideo.name
   },
-  // {
-  //   title: '视频',
-  //   icon: 'play-circle-o',
-  //   component: LbpVideo,
-  //   visible: true,
-  //   name: LbpVideo.name
-  // },
   {
     i18nTitle: {
       'en-US': 'Form Input',
@@ -108,13 +102,6 @@ export const pluginsList = [
     visible: true,
     name: LbpFormButton.name
   },
-  // {
-  //   title: '表单单选',
-  //   icon: 'hand-pointer-o',
-  //   component: LbpFormRadio,
-  //   visible: true,
-  //   name: LbpFormRadio.name
-  // },
   {
     i18nTitle: {
       'en-US': 'Form Checkbox',
