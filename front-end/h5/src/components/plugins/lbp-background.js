@@ -36,13 +36,16 @@ export default {
         label: '图片url',
         prop: {
           type: 'textarea'
-        },
-        defaultPropValue: ''
+        }
       }
     },
     backgroundColor: {
       type: String,
-      // TODO 为什么 transparent 无效？
+      // Q: 为什么 transparent 无效？
+      // A: 注意，根据 MDN 文档，颜色选择器的 value 只能是：# + 6个16进制字符串
+      // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/color#Value
+      // The value of an <input> element of type color is always a DOMString which contains a 7-character string specifying an RGB color in hexadecimal format.
+
       default: '#ffffff',
       editor: {
         type: 'a-input', // lbs-color-picker
@@ -50,8 +53,7 @@ export default {
         prop: {
           type: 'color'
         },
-        require: true,
-        defaultPropValue: '#ffffff' // TODO why logogram for color does't work?
+        require: true
       }
     }
   }

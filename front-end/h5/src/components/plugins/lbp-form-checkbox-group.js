@@ -1,17 +1,24 @@
 import LbpFormRadio from './lbp-form-radio.js'
-import { genUUID } from '../../utils/element.js'
 
-const defaultItems = [
-  {
-    value: '选项A'
-  },
-  {
-    value: '选项B'
-  },
-  {
-    value: '选项C'
-  }
-]
+function getDefaultItems () {
+  // defaultItems.slice(0)[0] === defaultItems.slice(0)[0] -> true
+  // Object.assign(defaultItems)[0] === Object.assign(defaultItems)[0] -> true
+  // clone = (val) => JSON.parse(JSON.stringify(val))
+  // clone(defaultItems)[0] === clone(defaultItems)[0] -> false
+  const defaultItems = [
+    {
+      value: '选项A'
+    },
+    {
+      value: '选项B'
+    },
+    {
+      value: '选项C'
+    }
+  ]
+
+  return defaultItems
+}
 
 export default {
   name: 'lbp-form-checkbox-group',
@@ -21,7 +28,7 @@ export default {
   props: {
     aliasName: {
       type: String,
-      default: `标题演示-${genUUID().slice(0, 6)}`,
+      default: `标题演示`,
       editor: {
         type: 'a-input',
         label: '填写标题',
@@ -30,12 +37,11 @@ export default {
     },
     items: {
       type: Array,
-      default: () => defaultItems,
+      default: () => getDefaultItems(),
       editor: {
         type: 'lbs-prop-text-enum-editor',
         label: '选项列表',
-        require: true,
-        defaultPropValue: defaultItems
+        require: true
       }
     },
     type: {
@@ -110,7 +116,7 @@ export default {
   render () {
     return (
       <div>
-        <h3>{this.aliasName}{this.type}</h3>
+        <h3>{this.aliasName}</h3>
         <input type="text" hidden value={this.value_} data-type="lbp-form-input" data-uuid={this.uuid} />
         {
           this.items.map(item => (
@@ -118,7 +124,7 @@ export default {
               vertical
               value={item.value}
               checked={this.type === 'radio' ? this.value === item.value : this.value.includes(item.value)}
-              aliasName={this.aliasName}
+              aliasName={this.uuid}
               type={this.type}
               onChange={this.onChange}
             >{item.value}</lbp-form-radio>
